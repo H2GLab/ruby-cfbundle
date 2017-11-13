@@ -1,0 +1,7 @@
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'lib/cfbundle/storage/base.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
