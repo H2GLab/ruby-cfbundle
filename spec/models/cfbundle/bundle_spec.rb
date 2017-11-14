@@ -119,7 +119,7 @@ RSpec.describe CFBundle::Bundle do
     let(:file) { file_fixture('Empty.zip') }
     it 'raises an exception' do
       expect { described_class.open file }
-        .to raise_error "no bundle found in ZIP archive \"#{file.to_path}\""
+        .to raise_error "no bundle found in ZIP archive \"#{file}\""
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.describe CFBundle::Bundle do
     let(:file) { file_fixture('Ambiguous.zip') }
     it 'raises an exception' do
       expect { described_class.open file }
-        .to raise_error "several bundles found in ZIP archive \"#{file.to_path}\""
+        .to raise_error "several bundles found in ZIP archive \"#{file}\""
     end
   end
 
