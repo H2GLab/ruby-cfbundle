@@ -21,7 +21,7 @@ module CFBundle
       # Opens a file in the storage.
       #
       # @param path [String] The path of the file to open.
-      # @param block [Proc] An optional code block to execute with the opended
+      # @param block [Proc] An optional code block to execute with the opened
       #                     file.
       def open(path, &block)
         # :nocov:
