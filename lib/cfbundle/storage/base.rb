@@ -18,11 +18,13 @@ module CFBundle
         # :nocov:
       end
 
-      # Opens a file in the storage.
+      # Opens a file for reading in the storage.
       #
       # @param path [String] The path of the file to open.
-      # @param block [Proc] An optional code block to execute with the opened
-      #                     file.
+      # @yieldparam file [IO] The opened file. It is automatically closed when
+      #                       the block terminates.
+      # @return [Object] The return value of the block when a block if given.
+      # @return [IO] The opened file when no block is given.
       def open(path, &block)
         # :nocov:
         raise(Errno::ENOENT, path)

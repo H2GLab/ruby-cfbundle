@@ -16,9 +16,10 @@ module CFBundle
     #
     # @param file [Object] The file to open. See {initialize} for a description
     #                      of the supported values.
-    # @yieldparam bundle [Bundle] The opened bundle.
-    # @yieldreturn [Object] The value to returns from {open}.
-    # @return [Object] The return value of the block.
+    # @yieldparam bundle [Bundle] The opened bundle. It is automatically closed
+    #                              when the block terminates.
+    # @return [Object] The return value of the block when a block if given.
+    # @return [Bundle] The opened bundle when no block is given.
     def self.open(file)
       bundle = new(file)
       return bundle unless block_given?

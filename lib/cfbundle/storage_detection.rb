@@ -3,7 +3,7 @@ require 'cfbundle/storage/file_system'
 require 'cfbundle/storage/zip'
 
 module CFBundle
-  # @api private
+  # @private
   # This module implements the methods required to automatically detect and
   # instantiate the storage in {Bundle.open} and {Bundle#initialize}.
   module StorageDetection
