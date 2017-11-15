@@ -33,7 +33,7 @@ module CFBundle
       path = path_for(file) || return
       ext = File.extname(path)
       if File.directory?(path) && ext != ''
-        Storage::FileSystem.new(file)
+        Storage::FileSystem.new(path)
       elsif ['.ipa', '.zip'].include? ext
         open_zip_path(path)
       end

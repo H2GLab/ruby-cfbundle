@@ -1,3 +1,4 @@
+require 'cfbundle/path_utils'
 require 'cfbundle/storage/base'
 
 module CFBundle
@@ -26,7 +27,7 @@ module CFBundle
       private
 
       def entry(path)
-        entry = File.join @root, path
+        entry = PathUtils.join(@root, path)
         entry if File.exist? entry
       end
 

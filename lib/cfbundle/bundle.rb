@@ -1,4 +1,5 @@
 require 'cfbundle/constants'
+require 'cfbundle/path_utils'
 require 'cfbundle/storage_detection'
 require 'cfpropertylist'
 
@@ -142,7 +143,7 @@ module CFBundle
     private
 
     def load_plist(path)
-      data = open(path, &:read)
+      data = storage.open(path, &:read)
       plist = CFPropertyList::List.new(data: data)
       CFPropertyList.native_types(plist.value)
     end
@@ -157,9 +158,9 @@ module CFBundle
 
     def layout_version
       @layout_version ||=
-        if exist? 'Contents'
+        if storage.exist? 'Contents'
           2
-        elsif exist? 'Resources'
+        elsif storage.exist? 'Resources'
           0
         else
           3
@@ -172,23 +173,11 @@ module CFBundle
     end
 
     def lookup_executable_path(name)
-      root = 'Contents' if layout_version == 2
-      path = path_join(root, 'MacOS', name)
-      return path if exist? path
-      path = path_join(root, name)
-      return path if exist? path
-    end
-
-    def path_join(*args)
-      args.compact.join('/')
-    end
-
-    def exist?(path)
-      @storage.exist? path
-    end
-
-    def open(path, &block)
-      @storage.open path, &block
+      root = layout_version == 2 ? 'Contents' : '.'
+      path = PathUtils.join(root, 'MacOS', name)
+      return path if storage.exist? path
+      path = PathUtils.join(root, name)
+      return path if storage.exist? path
     end
   end
 end

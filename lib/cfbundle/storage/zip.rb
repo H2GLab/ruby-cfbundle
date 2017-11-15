@@ -1,3 +1,4 @@
+require 'cfbundle/path_utils'
 require 'cfbundle/storage/base'
 
 module CFBundle
@@ -39,7 +40,8 @@ module CFBundle
       private
 
       def entry(path)
-        @zip.find_entry File.join(@root, path)
+        name = PathUtils.join(@root, path)
+        @zip.find_entry name
       end
 
       def entry!(path)
