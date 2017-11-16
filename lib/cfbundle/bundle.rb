@@ -7,8 +7,6 @@ require 'cfbundle/storage_detection'
 module CFBundle
   # A Bundle is an abstraction of a bundle accessible by the program.
   class Bundle
-    include CFBundle::StorageDetection
-
     # Opens a bundle.
     #
     # With no associated block, {open} is a synonym for {initialize new}. If the
@@ -52,7 +50,7 @@ module CFBundle
     # @param file [Object] The file to open.
     # @raise [ArgumentError] If the file cannot be opened.
     def initialize(file)
-      @storage = open_storage(file)
+      @storage = StorageDetection.open(file)
     end
 
     # Closes the bundle and its underlying storage.
