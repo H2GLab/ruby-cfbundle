@@ -1,8 +1,8 @@
 require 'cfbundle/constants'
 require 'cfbundle/localization'
 require 'cfbundle/path_utils'
+require 'cfbundle/plist'
 require 'cfbundle/storage_detection'
-require 'cfpropertylist'
 
 module CFBundle
   # A Bundle is an abstraction of a bundle accessible by the program.
@@ -74,7 +74,7 @@ module CFBundle
     # Returns the bundle's information property list hash.
     # @return [Hash]
     def info
-      @info ||= load_plist(info_plist_path)
+      @info ||= Plist.load_info_plist(self)
     end
 
     # Returns the bundle identifier from the bundle's information property list.
@@ -179,20 +179,6 @@ module CFBundle
     end
 
     private
-
-    def load_plist(path)
-      data = storage.open(path, &:read)
-      plist = CFPropertyList::List.new(data: data)
-      CFPropertyList.native_types(plist.value)
-    end
-
-    def info_plist_path
-      case layout_version
-      when 0 then 'Resources/Info.plist'
-      when 2 then 'Contents/Info.plist'
-      when 3 then 'Info.plist'
-      end
-    end
 
     def layout_version
       @layout_version ||=
