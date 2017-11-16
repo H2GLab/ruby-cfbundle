@@ -24,6 +24,9 @@ shared_examples_for 'a framework' do
       expect(subject.package_type).to eq(CFBundle::PACKAGE_TYPE_FRAMEWORK)
       expect(subject.release_version).to eq('1.0')
     end
+    it 'find resources directory' do
+      expect(subject.resources_directory).to eq('Resources')
+    end
   end
 end
 
@@ -37,6 +40,9 @@ shared_examples_for 'an iOS application' do
       expect(subject.name).to eq('iOS App')
       expect(subject.package_type).to eq(CFBundle::PACKAGE_TYPE_APPLICATION)
       expect(subject.release_version).to eq('1.0')
+    end
+    it 'find resources directory' do
+      expect(subject.resources_directory).to eq('.')
     end
     it 'is localized' do
       expect(subject.development_localization).to eq('en')
@@ -56,6 +62,9 @@ shared_examples_for 'a macOS application' do
       expect(subject.name).to eq('macOS App')
       expect(subject.package_type).to eq(CFBundle::PACKAGE_TYPE_APPLICATION)
       expect(subject.release_version).to eq('1.0')
+    end
+    it 'find resources directory' do
+      expect(subject.resources_directory).to eq('Contents/Resources')
     end
   end
 end

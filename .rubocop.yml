@@ -5,3 +5,6 @@ Lint/UnusedMethodArgument:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+
+Metrics/ParameterLists:
+  Max: 8

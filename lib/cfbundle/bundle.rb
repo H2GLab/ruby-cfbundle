@@ -2,6 +2,7 @@ require 'cfbundle/constants'
 require 'cfbundle/localization'
 require 'cfbundle/path_utils'
 require 'cfbundle/plist'
+require 'cfbundle/resource'
 require 'cfbundle/storage_detection'
 
 module CFBundle
@@ -169,24 +170,73 @@ module CFBundle
 
     # Returns an ordered list of preferred localizations contained in the
     # bundle.
-    # @param preferred_languages [Array] An array of strings or symbols
+    # @param preferred_languages [Array] An array of strings (or symbols)
     #        corresponding to a user's preferred languages.
     # @return [Array]
     def preferred_localizations(preferred_languages)
       Localization.preferred_localizations(localizations, preferred_languages)
     end
 
+    # Returns the first {Resource} object that matches the specified parameters.
+    #
+    # @param name [String?] The name to match or +nil+ to match any name.
+    # @param extension [String?] The extension to match or +nil+ to match any
+    #        extension.
+    # @param subdirectory [String?] The name of the bundle subdirectory
+    #        search.
+    # @param localization [String?, Symbol?] A language identifier to restrict
+    #        the search to a specific localization.
+    # @param preferred_languages [Array] An array of strings (or symbols)
+    #        corresponding to a user's preferred languages.
+    # @param product [String?] The product to match or +nil+ to match any
+    #        product.
+    # @return [Resource?]
+    # @see Resource.foreach
+    def find_resource(name, extension: nil, subdirectory: nil,
+                      localization: nil, preferred_languages: [], product: nil)
+      Resource.foreach(
+        self, name,
+        extension: extension, subdirectory: subdirectory,
+        localization: localization, preferred_languages: preferred_languages,
+        product: product
+      ).first
+    end
+
+    # Returns all the {Resource} objects that matches the specified parameters.
+    #
+    # @param name [String?] The name to match or +nil+ to match any name.
+    # @param extension [String?] The extension to match or +nil+ to match any
+    #        extension.
+    # @param subdirectory [String?] The name of the bundle subdirectory to
+    #        search.
+    # @param localization [String?, Array] The language identifier for the
+    #        localization.
+    # @param preferred_languages [Array] An array of strings (or symbols)
+    #        corresponding to a user's preferred languages.
+    # @param product [String?] The product to match or +nil+ to match any
+    #        product.
+    # @return [Array] An array of {Resource} objects.
+    # @see Resource.foreach
+    def find_resources(name, extension: nil, subdirectory: nil,
+                       localization: nil, preferred_languages: [], product: nil)
+      Resource.foreach(
+        self, name,
+        extension: extension, subdirectory: subdirectory,
+        localization: localization, preferred_languages: preferred_languages,
+        product: product
+      ).to_a
+    end
+
     private
 
     def layout_version
-      @layout_version ||=
-        if storage.directory? 'Contents'
-          2
-        elsif storage.directory? 'Resources'
-          0
-        else
-          3
-        end
+      @layout_version ||= detect_layout_version
+    end
+
+    def detect_layout_version
+      return 2 if storage.directory? 'Contents'
+      return 0 if storage.directory? 'Resources'
+      3
     end
 
     def info_string(key)
