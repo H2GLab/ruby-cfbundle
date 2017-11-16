@@ -158,9 +158,9 @@ module CFBundle
 
     def layout_version
       @layout_version ||=
-        if storage.exist? 'Contents'
+        if storage.directory? 'Contents'
           2
-        elsif storage.exist? 'Resources'
+        elsif storage.directory? 'Resources'
           0
         else
           3
@@ -175,9 +175,9 @@ module CFBundle
     def lookup_executable_path(name)
       root = layout_version == 2 ? 'Contents' : '.'
       path = PathUtils.join(root, 'MacOS', name)
-      return path if storage.exist? path
+      return path if storage.file? path
       path = PathUtils.join(root, name)
-      return path if storage.exist? path
+      return path if storage.file? path
     end
   end
 end

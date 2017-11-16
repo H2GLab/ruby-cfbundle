@@ -11,8 +11,25 @@ module CFBundle
       #
       # @param path [String] The path of a file or directory, relative to the
       #                      storage.
-      # @return false
       def exist?(path)
+        # :nocov:
+        false
+        # :nocov:
+      end
+
+      # Returns whether a given file exists within the storage.
+      #
+      # @param path [String] The path of a file, relative to the storage.
+      def file?(path)
+        # :nocov:
+        false
+        # :nocov:
+      end
+
+      # Returns whether a given directory exists within the storage.
+      #
+      # @param path [String] The path of a directory, relative to the storage.
+      def directory?(path)
         # :nocov:
         false
         # :nocov:

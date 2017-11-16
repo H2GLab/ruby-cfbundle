@@ -15,12 +15,21 @@ module CFBundle
         @skip_close = skip_close
       end
 
-      # Returns whether a given path exists within the storage.
-      #
-      # @param path [String] The path of a file or directory, relative to the
-      #                      storage.
+      # (see Base#exist?)
       def exist?(path)
         find(path) != nil
+      end
+
+      # (see Base#file?)
+      def file?(path)
+        entry = find(path)
+        !entry.nil? && entry.file?
+      end
+
+      # (see Base#directory?)
+      def directory?(path)
+        entry = find(path)
+        !entry.nil? && entry.directory?
       end
 
       # (see Base#open)

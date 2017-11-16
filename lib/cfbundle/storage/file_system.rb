@@ -10,13 +10,21 @@ module CFBundle
         @root = path
       end
 
-      # Returns whether a given path exists within the storage.
-      #
-      # @param path [String] The path of a file or directory, relative to the
-      #                      storage.
-      # @return false
+      # (see Base#exist?)
       def exist?(path)
         find(path) != nil
+      end
+
+      # (see Base#file?)
+      def file?(path)
+        entry = find(path)
+        !entry.nil? && File.file?(entry)
+      end
+
+      # (see Base#directory?)
+      def directory?(path)
+        entry = find(path)
+        !entry.nil? && File.directory?(entry)
       end
 
       # (see Base#open)
