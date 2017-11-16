@@ -39,7 +39,7 @@ shared_examples_for 'an iOS application' do
       expect(subject.release_version).to eq('1.0')
     end
     it 'is localized' do
-      expect(subject.development_region).to eq('en')
+      expect(subject.development_localization).to eq('en')
       expect(subject.localizations).to eq(['en', 'fr-CA', 'fr'])
       expect(subject.preferred_localizations(['fr-FR'])).to eq ['fr']
     end

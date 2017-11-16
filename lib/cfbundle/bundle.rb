@@ -125,7 +125,7 @@ module CFBundle
     # Returns the name of the development language of the bundle.
     # @return [String, nil]
     # @see INFO_KEY_BUNDLE_DEVELOPMENT_REGION
-    def development_region
+    def development_localization
       info_string(CFBundle::INFO_KEY_BUNDLE_DEVELOPMENT_REGION)
     end
 
