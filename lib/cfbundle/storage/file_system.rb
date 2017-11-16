@@ -16,23 +16,23 @@ module CFBundle
       #                      storage.
       # @return false
       def exist?(path)
-        entry(path) != nil
+        find(path) != nil
       end
 
       # (see Base#open)
       def open(path, &block)
-        File.open entry!(path), &block
+        File.open find!(path), &block
       end
 
       private
 
-      def entry(path)
+      def find(path)
         entry = PathUtils.join(@root, path)
         entry if File.exist? entry
       end
 
-      def entry!(path)
-        entry(path) || raise(Errno::ENOENT, path)
+      def find!(path)
+        find(path) || raise(Errno::ENOENT, path)
       end
     end
   end
