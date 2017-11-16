@@ -32,6 +32,17 @@ module CFBundle
         File.open find!(path), &block
       end
 
+      # (see Base#foreach)
+      def foreach(path)
+        Enumerator.new do |y|
+          base = Dir.foreach find!(path)
+          loop do
+            entry = base.next
+            y << PathUtils.join(path, entry) unless ['.', '..'].include?(entry)
+          end
+        end
+      end
+
       private
 
       def find(path)

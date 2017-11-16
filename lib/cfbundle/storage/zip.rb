@@ -37,6 +37,19 @@ module CFBundle
         find!(path).get_input_stream(&block)
       end
 
+      # (see Base#foreach)
+      def foreach(path)
+        Enumerator.new do |y|
+          directory = find! path
+          base = @zip.entries.each
+          loop do
+            entry = base.next
+            next unless entry.parent_as_string == directory.name
+            y << PathUtils.join(path, File.basename(entry.name))
+          end
+        end
+      end
+
       # Invoked when the storage is no longer needed.
       #
       # This method closes the underlying Zip file unless the storage was

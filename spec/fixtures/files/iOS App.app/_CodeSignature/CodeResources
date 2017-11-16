@@ -24,6 +24,33 @@
 		<data>
 		n57qDP4tZfLD1rCS43W0B4LQjzE=
 		</data>
+		<key>en.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			D9eAGLnonBjHBLY45ll4Qj7gTtE=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>fr-CA.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			98U/AmrGftiHGUg28u3MgdwK8CM=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>fr.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			DYs7BMvqudIVPnUA+GyMQd7IY2Y=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -59,6 +86,45 @@
 			<data>
 			MQgtc2tOi/OehwTVKt2jeBJbvNFzlXxfqc9z0Z3ovf8=
 			</data>
+		</dict>
+		<key>en.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			D9eAGLnonBjHBLY45ll4Qj7gTtE=
+			</data>
+			<key>hash2</key>
+			<data>
+			Ntu2+aaup+thPQPUGNyT/gzy1WlUVSY4UDXzrzFljO8=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>fr-CA.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			98U/AmrGftiHGUg28u3MgdwK8CM=
+			</data>
+			<key>hash2</key>
+			<data>
+			VAjw2UQv3DG4aJ2uXO+k1yY84+5eZtmwsN3civ33UVg=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>fr.lproj/Test.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			DYs7BMvqudIVPnUA+GyMQd7IY2Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			fXHcVlLC/3zAo0H2O2qkrZntuab72il7FWHWOSA992Y=
+			</data>
+			<key>optional</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>rules</key>

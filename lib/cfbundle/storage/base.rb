@@ -48,6 +48,17 @@ module CFBundle
         # :nocov:
       end
 
+      # Returns an enumerator that enumerates the files contained in a
+      # directory.
+      #
+      # @param path [String] The path to the directory to enumerate.
+      # @return [Enumerator]
+      def foreach(path)
+        # :nocov:
+        raise(Errno::ENOENT, path)
+        # :nocov:
+      end
+
       # Invoked when the storage is no longer needed.
       #
       # The default implementation does nothing.

@@ -1,4 +1,5 @@
 require 'cfbundle/constants'
+require 'cfbundle/localization'
 require 'cfbundle/path_utils'
 require 'cfbundle/storage_detection'
 require 'cfpropertylist'
@@ -123,6 +124,13 @@ module CFBundle
       info_string(CFBundle::INFO_KEY_BUNDLE_DISPLAY_NAME)
     end
 
+    # Returns the name of the development language of the bundle.
+    # @return [String, nil]
+    # @see INFO_KEY_BUNDLE_DEVELOPMENT_REGION
+    def development_region
+      info_string(CFBundle::INFO_KEY_BUNDLE_DEVELOPMENT_REGION)
+    end
+
     # Returns the name of the bundle's executable file.
     # @return [String, nil]
     # @see INFO_KEY_BUNDLE_EXECUTABLE
@@ -138,6 +146,36 @@ module CFBundle
     def executable_path
       @executable_path ||=
         executable_name && lookup_executable_path(executable_name)
+    end
+
+    # Returns the path of the bundle's subdirectory that contains its resources.
+    #
+    # The path is relative to the bundle's path. For iOS application bundles,
+    # as the resources directory is the bundle, this method returns a single dot
+    # (+.+).
+    # @return [String]
+    # @see Resource
+    def resources_directory
+      case layout_version
+      when 0 then 'Resources'
+      when 2 then 'Contents/Resources'
+      when 3 then '.'
+      end
+    end
+
+    # Returns a list of all the localizations contained in the bundle.
+    # @return [Array]
+    def localizations
+      @localizations ||= Localization.localizations_in(self)
+    end
+
+    # Returns an ordered list of preferred localizations contained in the
+    # bundle.
+    # @param preferred_languages [Array] An array of strings or symbols
+    #        corresponding to a user's preferred languages.
+    # @return [Array]
+    def preferred_localizations(preferred_languages)
+      Localization.preferred_localizations(localizations, preferred_languages)
     end
 
     private

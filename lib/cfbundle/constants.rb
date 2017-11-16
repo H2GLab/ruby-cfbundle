@@ -1,4 +1,5 @@
 module CFBundle
+  INFO_KEY_BUNDLE_DEVELOPMENT_REGION    = 'CFBundleDevelopmentRegion'.freeze
   INFO_KEY_BUNDLE_DISPLAY_NAME          = 'CFBundleDisplayName'.freeze
   INFO_KEY_BUNDLE_EXECUTABLE            = 'CFBundleExecutable'.freeze
   INFO_KEY_BUNDLE_IDENTIFIER            = 'CFBundleIdentifier'.freeze
