@@ -27,10 +27,15 @@ RSpec.shared_examples 'an iOS application with resources' do
         'AppIcon60x60@2x', extension: 'png', product: 'ipad'
       ).path).to eq('AppIcon60x60@2x.png')
     end
-    it 'does not a product variant unless requested' do
+    it 'does not return a product variant unless requested' do
       expect(bundle.find_resource(
                'AppIcon76x76@2x', extension: 'png'
       )).to be_nil
+    end
+    it 'accepts a Regexp for the name' do
+      expect(bundle.find_resources(
+        /\AAppIcon60x60(@\dx)?\z/, extension: 'png'
+      ).map(&:path)).to eq(['AppIcon60x60@2x.png', 'AppIcon60x60@3x.png'])
     end
   end
 

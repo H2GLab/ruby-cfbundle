@@ -179,7 +179,8 @@ module CFBundle
 
     # Returns the first {Resource} object that matches the specified parameters.
     #
-    # @param name [String?] The name to match or +nil+ to match any name.
+    # @param name [String?, Rexgep?] The name to match or +nil+ to match any
+    #        name.
     # @param extension [String?] The extension to match or +nil+ to match any
     #        extension.
     # @param subdirectory [String?] The name of the bundle subdirectory
@@ -204,13 +205,14 @@ module CFBundle
 
     # Returns all the {Resource} objects that matches the specified parameters.
     #
-    # @param name [String?] The name to match or +nil+ to match any name.
+    # @param name [String?, Rexgep?] The name to match or +nil+ to match any
+    #        name.
     # @param extension [String?] The extension to match or +nil+ to match any
     #        extension.
     # @param subdirectory [String?] The name of the bundle subdirectory to
     #        search.
-    # @param localization [String?, Array] The language identifier for the
-    #        localization.
+    # @param localization [String?, Symbol?] A language identifier to restrict
+    #        the search to a specific localization.
     # @param preferred_languages [Array] An array of strings (or symbols)
     #        corresponding to a user's preferred languages.
     # @param product [String?] The product to match or +nil+ to match any

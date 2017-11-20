@@ -35,7 +35,8 @@ module CFBundle
     # Enumerates the resources in a bundle that match the specified parameters.
     #
     # @param bundle [Bundle] The bundle that contains the resources.
-    # @param name [String?] The name to match or +nil+ to match any name.
+    # @param name [String?, Rexgep?] The name to match or +nil+ to match any
+    #        name.
     # @param extension [String?] The extension to match or +nil+ to match any
     #        extension.
     # @param localization [String?, Symbol?] A language identifier to restrict
@@ -72,7 +73,9 @@ module CFBundle
     end
 
     def name_match?(predicate)
-      predicate.name.nil? || @name == predicate.name
+      return true if predicate.name.nil?
+      return predicate.name.match? @name if predicate.name.is_a?(Regexp)
+      predicate.name == @name
     end
 
     def extension_match?(predicate)
@@ -153,7 +156,7 @@ module CFBundle
     # the resources of a bundle.
     class Predicate
       # Returns the name to match or +nil+ to match any name.
-      # @return [String?]
+      # @return [String?, Regexp?]
       attr_reader :name
 
       # Returns the extension to match or +nil+ to match any extension.
@@ -164,7 +167,8 @@ module CFBundle
       # @return [String]
       attr_reader :product
 
-      # @param name [String?] The name to match or +nil+ to match any name.
+      # @param name [String?, Rexgep?] The name to match or +nil+ to match any
+      #        name.
       # @param extension [String?] The extension to match or +nil+ to match any
       #                            extension.
       # @param product [String?] The product to match.
