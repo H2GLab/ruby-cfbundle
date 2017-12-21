@@ -41,7 +41,7 @@ module CFBundle
       def foreach(path)
         Enumerator.new do |y|
           directory = find! path
-          base = @zip.entries.each
+          base = @zip.entries.sort.each
           loop do
             entry = base.next
             next unless entry.parent_as_string == directory.name

@@ -35,7 +35,7 @@ module CFBundle
       # (see Base#foreach)
       def foreach(path)
         Enumerator.new do |y|
-          base = Dir.foreach find!(path)
+          base = Dir.entries(find!(path)).sort.each
           loop do
             entry = base.next
             y << PathUtils.join(path, entry) unless ['.', '..'].include?(entry)
