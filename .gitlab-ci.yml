@@ -1,0 +1,19 @@
+image: h2glab/ruby-base:2.4.1
+
+cache:
+  paths:
+    - vendor/bundle
+
+stages:
+  - test
+
+before_script:
+  - bundle install --path vendor/bundle  
+
+rspec:
+  coverage: '/\(\d+\.\d+%\) covered./'
+  script:
+    - bundle exec rspec
+  stage: test
+  tags:
+    - docker
