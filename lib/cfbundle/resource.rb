@@ -16,7 +16,6 @@ module CFBundle
     def initialize(bundle, path)
       @bundle = bundle
       @path = path
-      @directory, @name, @product, @extension = PathUtils.split_resource(path)
     end
 
     # Opens the resource for reading.
@@ -57,39 +56,10 @@ module CFBundle
         predicate = Predicate.new(name, extension, product)
         loop do
           resource = enumerator.next
-          y << resource if resource.send(:match?, predicate)
+          y << resource if predicate.match?(resource)
         end
       end
       enumerator.each(&block)
-    end
-
-    private
-
-    def match?(predicate)
-      return false unless name_match?(predicate) &&
-                          extension_match?(predicate) &&
-                          product_match?(predicate)
-      predicate.uniq?(@name, @extension)
-    end
-
-    def name_match?(predicate)
-      return true if predicate.name.nil?
-      return predicate.name.match? @name if predicate.name.is_a?(Regexp)
-      predicate.name == @name
-    end
-
-    def extension_match?(predicate)
-      predicate.extension.nil? || @extension == predicate.extension
-    end
-
-    def product_match?(predicate)
-      return true if @product == predicate.product
-      return false unless @product.empty?
-      !bundle.storage.exist?(path_with_product(predicate.product))
-    end
-
-    def path_with_product(product)
-      PathUtils.join_resource(@directory, @name, product, @extension)
     end
 
     # @private
@@ -179,18 +149,49 @@ module CFBundle
         @keys = Set.new
       end
 
-      # Ensures the given name and extension are unique during the enumeration.
+      # Returns whether the predicate matches a given resource.
       #
-      # @param name [String] The resource name.
-      # @param extension [String] The resource extension.
+      # A predicate ensures resource unicity by the caching the filename of
+      # previsouly matched resources. Therefore this method always returns
+      # when invoked twice with the same resource.
+      #
+      # @param resource [Resource] The resource to test.
+      # @return [Boolean]
+      def match?(resource)
+        directory, name, product, extension = PathUtils.split_resource(
+          resource.path, @product
+        )
+        extension_match?(extension) &&
+          name_match?(name) &&
+          product_match?(directory, name, product, extension, resource) &&
+          uniq?(name, extension)
+      end
+
+      private
+
+      def extension_match?(extension)
+        @extension.nil? || @extension == extension
+      end
+
+      def name_match?(name)
+        @name.nil? || @name === name
+      end
+
+      def product_match?(directory, name, product, extension, resource)
+        return true if @product == product
+        return false unless product.empty?
+        exact_path = PathUtils.join_resource(
+          directory, name, @product, extension
+        )
+        !resource.bundle.storage.exist?(exact_path)
+      end
+
       def uniq?(name, extension)
         key = [name, extension].join
         return false if @keys.include?(key)
         @keys << key
         true
       end
-
-      private
 
       def extension_for(extension)
         return extension if extension.nil? || extension.empty?

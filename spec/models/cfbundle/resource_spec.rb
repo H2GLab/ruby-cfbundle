@@ -29,8 +29,13 @@ RSpec.shared_examples 'an iOS application with resources' do
     end
     it 'does not return a product variant unless requested' do
       expect(bundle.find_resource(
-               'AppIcon76x76@2x', extension: 'png'
+        'AppIcon76x76@2x', extension: 'png'
       )).to be_nil
+    end
+    it 'finds the resource when the product variant is part of the name' do
+      expect(bundle.find_resource(
+        'AppIcon76x76@2x~ipad', extension: 'png'
+      ).path).to eq('AppIcon76x76@2x~ipad.png')
     end
     it 'accepts a Regexp for the name' do
       expect(bundle.find_resources(

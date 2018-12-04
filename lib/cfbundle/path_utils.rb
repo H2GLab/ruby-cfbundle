@@ -31,13 +31,16 @@ module CFBundle
       # extension. The product is either empty or starts with a tilde. The
       # extension is either empty or starts with a dot.
       # @param path [String] The path to the resource.
+      # @param expected_product [String?] The expected value for product.
       # @return [Array]
       # @see join_resource
-      def split_resource(path)
+      def split_resource(path, expected_product)
         directory = File.dirname(path)
         extension = File.extname(path)
         basename = File.basename(path, extension)
-        name, product = split_resource_name_and_product(basename)
+        name, product = split_resource_name_and_product(
+          basename, expected_product
+        )
         [directory, name, product, extension]
       end
 
@@ -57,12 +60,14 @@ module CFBundle
 
       private
 
-      def split_resource_name_and_product(basename)
-        name, _, product = basename.rpartition('~')
-        if name.empty? || product.empty?
+      def split_resource_name_and_product(basename, expected_product)
+        parts = basename.rpartition('~')
+        name = parts[0]
+        product = parts[1] + parts[2]
+        if name.empty? || product != expected_product
           [basename, '']
         else
-          [name, '~' + product]
+          [name, product]
         end
       end
     end
