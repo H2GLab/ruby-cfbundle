@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'CFPropertyList', '>= 2.3.5', '< 3.0.0'
   s.add_development_dependency 'rspec', '~> 3.7.0'
   s.add_development_dependency 'rubocop', '~> 0.51.0'
-  s.add_development_dependency 'rubyzip', '~> 1.2.1'
+  s.add_development_dependency 'rubyzip', '~> 1.2.2'
   s.add_development_dependency 'simplecov', '~> 0.15.1'
 end
